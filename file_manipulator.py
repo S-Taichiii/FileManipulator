@@ -101,20 +101,20 @@ def manipulate_file(argv):
             contents = f.read()
         with open(outputPath, 'w') as f:
             f.write(Command.copy(contents))
-    if command == 'duplicate_contents':
+    elif command == 'duplicate_contents':
         cnt = argv[3]
 
         with open(inputPath, 'r') as f:
             contents = f.read()
-        with open(outputPath, 'w') as f:
+        with open(inputPath, 'w') as f:
             f.write(Command.duplicate_contents(contents, cnt))
-    if command == 'replace_string':
+    elif command == 'replace_string':
         needle = argv[3]
         newString = argv[4]
 
         with open(inputPath, 'r') as f:
             contents = f.read()
-        with open(outputPath, 'w') as f:
+        with open(inputPath, 'w') as f:
             f.write(Command.replace_string(contents, needle, newString))
 
 if __name__ == '__main__':
