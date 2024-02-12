@@ -35,17 +35,20 @@ def main():
 
 def validArgv(argv):
     """The function to judge commandline arguments valid"""
-    # length of argv must be 4 or 5
-    if len(argv) != 4 and len(argv) != 5:
-        print('Your intt is wrong.')
+    # length of argv must be 4 or 5 or 6
+    if len(argv) != 4 and len(argv) != 5 and len(argv) != 6:
+        print('Your in inputs wrong.')
         return False
     
     commandList = ['reverse', 'copy', 'duplicate_contents', 'replace_string']
     command = argv[1]
 
-    # Does inputPath exist?
+    # Does inputPath and outputPath exist?
     if not os.path.isfile(argv[2]):
-        print('The input path is not found or is not file')
+        print('The input path is not found or not file')
+        return False
+    elif not os.path.isfile(argv[3]):
+        print("The output file is not found or not file")
         return False
     
     # Is command valid
@@ -53,19 +56,13 @@ def validArgv(argv):
         print('Your input is wrong')
         return False
     elif command == 'reverse' or command == 'copy':
-        outputPath = argv[3]
-
         if len(argv)  != 4:
             print('Your input is wtong.')
             return False
-        # Does outputPath exist?
-        elif not os.path.isfile(outputPath):
-            print('The output file is not found or is not file')
-            return False
     elif command == 'duplicate_contents':
-        cnt = argv[3]
+        cnt = argv[4]
 
-        if len(argv) != 4:
+        if len(argv) != 5:
             print('Your input is wrong')
             return False
         else:
@@ -76,7 +73,7 @@ def validArgv(argv):
                 print('Duplicate number must be num')
                 return False
     else:
-        if len(argv) != 5:
+        if len(argv) != 6:
             print('Your input is wrong')
             return False
     
@@ -85,6 +82,7 @@ def validArgv(argv):
 def manipulate_file(argv):
     command = argv[1]
     inputPath = argv[2]
+    outputPath = argv[3]
     contents = ''
 
     if command == 'reverse':
@@ -102,19 +100,19 @@ def manipulate_file(argv):
         with open(outputPath, 'w') as f:
             f.write(Command.copy(contents))
     elif command == 'duplicate_contents':
-        cnt = argv[3]
+        cnt = argv[4]
 
         with open(inputPath, 'r') as f:
             contents = f.read()
-        with open(inputPath, 'w') as f:
+        with open(outputPath, 'w') as f:
             f.write(Command.duplicate_contents(contents, cnt))
     elif command == 'replace_string':
-        needle = argv[3]
-        newString = argv[4]
+        needle = argv[4]
+        newString = argv[5]
 
         with open(inputPath, 'r') as f:
             contents = f.read()
-        with open(inputPath, 'w') as f:
+        with open(outputPath, 'w') as f:
             f.write(Command.replace_string(contents, needle, newString))
 
 if __name__ == '__main__':
